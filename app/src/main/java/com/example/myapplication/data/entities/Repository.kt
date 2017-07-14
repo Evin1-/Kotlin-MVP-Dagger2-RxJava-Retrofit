@@ -1,6 +1,5 @@
-package com.example.myapplication.data
+package com.example.myapplication.data.entities
 
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Repository(@SerializedName("id") var id: Int? = null,
