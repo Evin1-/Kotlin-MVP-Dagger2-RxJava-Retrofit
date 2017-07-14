@@ -1,5 +1,7 @@
 package com.example.myapplication.data.entities
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class Repository(@SerializedName("id") var id: Int? = null,
@@ -8,7 +10,7 @@ data class Repository(@SerializedName("id") var id: Int? = null,
                       @SerializedName("owner") var owner: Owner? = null,
                       @SerializedName("private") var private: Boolean? = null,
                       @SerializedName("html_url") var htmlUrl: String? = null,
-                      @SerializedName("description") var description: Any? = null,
+                      @SerializedName("description") var description: String? = null,
                       @SerializedName("fork") var fork: Boolean? = null,
                       @SerializedName("url") var url: String? = null,
                       @SerializedName("forks_url") var forksUrl: String? = null,
@@ -54,7 +56,7 @@ data class Repository(@SerializedName("id") var id: Int? = null,
                       @SerializedName("ssh_url") var sshUrl: String? = null,
                       @SerializedName("clone_url") var cloneUrl: String? = null,
                       @SerializedName("svn_url") var svnUrl: String? = null,
-                      @SerializedName("homepage") var homepage: Any? = null,
+                      @SerializedName("homepage") var homepage: String? = null,
                       @SerializedName("size") var size: Int? = null,
                       @SerializedName("stargazers_count") var stargazersCount: Int? = null,
                       @SerializedName("watchers_count") var watchersCount: Int? = null,
@@ -65,13 +67,166 @@ data class Repository(@SerializedName("id") var id: Int? = null,
                       @SerializedName("has_wiki") var hasWiki: Boolean? = null,
                       @SerializedName("has_pages") var hasPages: Boolean? = null,
                       @SerializedName("forks_count") var forksCount: Int? = null,
-                      @SerializedName("mirror_url") var mirrorUrl: Any? = null,
+                      @SerializedName("mirror_url") var mirrorUrl: String? = null,
                       @SerializedName("open_issues_count") var openIssuesCount: Int? = null,
                       @SerializedName("forks") var forks: Int? = null,
                       @SerializedName("open_issues") var openIssues: Int? = null,
                       @SerializedName("watchers") var watchers: Int? = null,
-                      @SerializedName("default_branch") var defaultBranch: String? = null) {
+                      @SerializedName("default_branch") var defaultBranch: String? = null) : Parcelable {
     override fun toString(): String {
         return "Repository(name=$name)"
+    }
+
+    companion object {
+        @JvmField val CREATOR: Parcelable.Creator<Repository> = object : Parcelable.Creator<Repository> {
+            override fun createFromParcel(source: Parcel): Repository = Repository(source)
+            override fun newArray(size: Int): Array<Repository?> = arrayOfNulls(size)
+        }
+    }
+
+    constructor(source: Parcel) : this(
+            source.readValue(Int::class.java.classLoader) as Int?,
+            source.readString(),
+            source.readString(),
+            source.readParcelable<Owner>(Owner::class.java.classLoader),
+            source.readValue(Boolean::class.java.classLoader) as Boolean?,
+            source.readString(),
+            source.readString(),
+            source.readValue(Boolean::class.java.classLoader) as Boolean?,
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readValue(Int::class.java.classLoader) as Int?,
+            source.readValue(Int::class.java.classLoader) as Int?,
+            source.readValue(Int::class.java.classLoader) as Int?,
+            source.readString(),
+            source.readValue(Boolean::class.java.classLoader) as Boolean?,
+            source.readValue(Boolean::class.java.classLoader) as Boolean?,
+            source.readValue(Boolean::class.java.classLoader) as Boolean?,
+            source.readValue(Boolean::class.java.classLoader) as Boolean?,
+            source.readValue(Boolean::class.java.classLoader) as Boolean?,
+            source.readValue(Int::class.java.classLoader) as Int?,
+            source.readString(),
+            source.readValue(Int::class.java.classLoader) as Int?,
+            source.readValue(Int::class.java.classLoader) as Int?,
+            source.readValue(Int::class.java.classLoader) as Int?,
+            source.readValue(Int::class.java.classLoader) as Int?,
+            source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeValue(id)
+        dest.writeString(name)
+        dest.writeString(fullName)
+        dest.writeParcelable(owner, 0)
+        dest.writeValue(private)
+        dest.writeString(htmlUrl)
+        dest.writeString(description)
+        dest.writeValue(fork)
+        dest.writeString(url)
+        dest.writeString(forksUrl)
+        dest.writeString(keysUrl)
+        dest.writeString(collaboratorsUrl)
+        dest.writeString(teamsUrl)
+        dest.writeString(hooksUrl)
+        dest.writeString(issueEventsUrl)
+        dest.writeString(eventsUrl)
+        dest.writeString(assigneesUrl)
+        dest.writeString(branchesUrl)
+        dest.writeString(tagsUrl)
+        dest.writeString(blobsUrl)
+        dest.writeString(gitTagsUrl)
+        dest.writeString(gitRefsUrl)
+        dest.writeString(treesUrl)
+        dest.writeString(statusesUrl)
+        dest.writeString(languagesUrl)
+        dest.writeString(stargazersUrl)
+        dest.writeString(contributorsUrl)
+        dest.writeString(subscribersUrl)
+        dest.writeString(subscriptionUrl)
+        dest.writeString(commitsUrl)
+        dest.writeString(gitCommitsUrl)
+        dest.writeString(commentsUrl)
+        dest.writeString(issueCommentUrl)
+        dest.writeString(contentsUrl)
+        dest.writeString(compareUrl)
+        dest.writeString(mergesUrl)
+        dest.writeString(archiveUrl)
+        dest.writeString(downloadsUrl)
+        dest.writeString(issuesUrl)
+        dest.writeString(pullsUrl)
+        dest.writeString(milestonesUrl)
+        dest.writeString(notificationsUrl)
+        dest.writeString(labelsUrl)
+        dest.writeString(releasesUrl)
+        dest.writeString(deploymentsUrl)
+        dest.writeString(createdAt)
+        dest.writeString(updatedAt)
+        dest.writeString(pushedAt)
+        dest.writeString(gitUrl)
+        dest.writeString(sshUrl)
+        dest.writeString(cloneUrl)
+        dest.writeString(svnUrl)
+        dest.writeString(homepage)
+        dest.writeValue(size)
+        dest.writeValue(stargazersCount)
+        dest.writeValue(watchersCount)
+        dest.writeString(language)
+        dest.writeValue(hasIssues)
+        dest.writeValue(hasProjects)
+        dest.writeValue(hasDownloads)
+        dest.writeValue(hasWiki)
+        dest.writeValue(hasPages)
+        dest.writeValue(forksCount)
+        dest.writeString(mirrorUrl)
+        dest.writeValue(openIssuesCount)
+        dest.writeValue(forks)
+        dest.writeValue(openIssues)
+        dest.writeValue(watchers)
+        dest.writeString(defaultBranch)
     }
 }

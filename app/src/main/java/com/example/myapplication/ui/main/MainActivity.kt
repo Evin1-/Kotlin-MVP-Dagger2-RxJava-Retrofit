@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
@@ -9,6 +11,8 @@ import android.widget.Toast
 import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.entities.Repository
+import com.example.myapplication.ui.details.DetailsActivity
+import com.example.myapplication.utils.ActivityUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -69,7 +73,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun initViews() {
-        mainAdapter = MainAdapter(repositories)
+        mainAdapter = MainAdapter(repositories) { ActivityUtils.startActivityRepository(this, it) }
         a_main_recycler.adapter = mainAdapter
         a_main_recycler.layoutManager = LinearLayoutManager(this)
         a_main_recycler.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
