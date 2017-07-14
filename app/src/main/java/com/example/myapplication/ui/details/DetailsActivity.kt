@@ -1,10 +1,9 @@
 package com.example.myapplication.ui.details
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.example.myapplication.App
-
 import com.example.myapplication.R
 import com.example.myapplication.data.entities.Repository
 import com.example.myapplication.di.ApplicationComponent
