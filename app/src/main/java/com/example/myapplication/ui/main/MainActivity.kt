@@ -2,7 +2,7 @@ package com.example.myapplication.ui.main
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
 import com.example.myapplication.App
@@ -18,13 +18,24 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     @Inject
     lateinit var mainPresenter: MainPresenter
 
+    val repositories: MutableList<Repository> = mutableListOf<Repository>()
+    var mainAdapter: MainAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         injectDependencies()
+        initViews()
 
+        mainPresenter.attachView(this)
         a_main_btn.setOnClickListener { mainPresenter.loadResults() }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        mainPresenter.detachView()
     }
 
     override fun injectDependencies() {
@@ -42,9 +53,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showResults(results: List<Repository>) {
-        for (result in results) {
-            Log.d(TAG, result.toString())
-        }
+        println(results)
+        repositories.clear()
+        repositories.addAll(results)
+        mainAdapter?.notifyDataSetChanged()
     }
 
     override fun showProgress() {
@@ -53,5 +65,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun hideProgress() {
         a_main_progress.visibility = View.INVISIBLE
+    }
+
+    private fun initViews() {
+        mainAdapter = MainAdapter(repositories)
+        a_main_recycler.adapter = mainAdapter
+        a_main_recycler.layoutManager = LinearLayoutManager(this)
     }
 }

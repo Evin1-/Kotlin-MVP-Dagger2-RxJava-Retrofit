@@ -27,32 +27,23 @@ class MainPresenter(val gitHubRepository: GitHubRepository) : MainContract.Prese
     }
 
     override fun loadResults() {
-        println("loadResults")
+        view?.showProgress()
         gitHubRepository.retrieveRepositories(TEST_USER, object : Observer<List<Repository>> {
             override fun onNext(results: List<Repository>) {
                 view?.showResults(results)
-
-                for (result in results) {
-                    println(result)
-                }
             }
 
             override fun onError(e: Throwable) {
                 view?.showError(e.message ?: "There was an error on the request!")
-                println("onError: " + e.toString())
-                e.printStackTrace()
             }
 
             override fun onComplete() {
                 view?.hideProgress()
-                println("onComplete: ")
             }
 
             override fun onSubscribe(d: Disposable) {
                 compositeDisposable.add(d)
-                println("onSubscribe: ")
             }
-
         })
     }
 }

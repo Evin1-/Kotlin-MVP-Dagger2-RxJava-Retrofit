@@ -70,4 +70,8 @@ data class Repository(@SerializedName("id") var id: Int? = null,
                       @SerializedName("forks") var forks: Int? = null,
                       @SerializedName("open_issues") var openIssues: Int? = null,
                       @SerializedName("watchers") var watchers: Int? = null,
-                      @SerializedName("default_branch") var defaultBranch: String? = null)
+                      @SerializedName("default_branch") var defaultBranch: String? = null) {
+    override fun toString(): String {
+        return "Repository(name=$name)"
+    }
+}
