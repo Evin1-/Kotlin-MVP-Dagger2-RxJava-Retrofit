@@ -2,6 +2,7 @@ package com.example.myapplication.ui.main
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
@@ -71,5 +72,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         mainAdapter = MainAdapter(repositories)
         a_main_recycler.adapter = mainAdapter
         a_main_recycler.layoutManager = LinearLayoutManager(this)
+        a_main_recycler.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
     }
 }
