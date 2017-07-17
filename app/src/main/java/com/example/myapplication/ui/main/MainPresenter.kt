@@ -1,6 +1,8 @@
 package com.example.myapplication.ui.main
 
 import com.example.myapplication.data.GitHubRepository
+import com.example.myapplication.utils.ExtensionUtils.void
+import com.example.myapplication.utils.ExtensionUtils.voidBoolean
 import com.example.myapplication.data.entities.Repository
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
@@ -28,22 +30,13 @@ class MainPresenter(val gitHubRepository: GitHubRepository) : MainContract.Prese
 
     override fun loadResults() {
         view?.showProgress()
-        gitHubRepository.retrieveRepositories(TEST_USER, object : Observer<List<Repository>> {
-            override fun onNext(results: List<Repository>) {
-                view?.showResults(results)
-            }
-
-            override fun onError(e: Throwable) {
-                view?.showError(e.message ?: "There was an error on the request!")
-            }
-
-            override fun onComplete() {
-                view?.hideProgress()
-            }
-
-            override fun onSubscribe(d: Disposable) {
-                compositeDisposable.add(d)
-            }
-        })
+        gitHubRepository.retrieveRepositories(TEST_USER,
+                object : Observer<List<Repository>> {
+                    override fun onComplete() = view?.hideProgress().void()
+                    override fun onNext(t: List<Repository>) = view?.showResults(t).void()
+                    override fun onError(e: Throwable) = view?.showError(e.toString()).void()
+                    override fun onSubscribe(d: Disposable) = compositeDisposable.add(d).voidBoolean()
+                }
+        )
     }
 }
